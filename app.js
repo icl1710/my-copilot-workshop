@@ -4,7 +4,7 @@ const THEME_STORAGE_KEY = 'workshop-theme';
 const EMPTY_MESSAGES = {
   all: '還沒有任何待辦事項,新增一個吧!',
   active: '沒有未完成的待辦事項。',
-  completed: '沒有已完成的待辦事項。',
+  completed: '目前沒有已完成的事項；未完成的事項只是被目前的篩選條件隱藏，並未刪除。',
 };
 
 const form = document.getElementById('todo-form');

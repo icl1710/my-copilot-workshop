@@ -1,6 +1,7 @@
 // 待辦事項儲存在瀏覽器的 localStorage。
 const STORAGE_KEY = 'workshop-todos';
 const THEME_STORAGE_KEY = 'workshop-theme';
+const FILTER_STORAGE_KEY = 'workshop-filter';
 const EMPTY_MESSAGES = {
   all: '還沒有任何待辦事項,新增一個吧!',
   active: '沒有未完成的待辦事項。',
@@ -19,7 +20,8 @@ const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
 // 手動設定優先於系統偏好；沒有設定時由 CSS 與系統偏好決定。
 const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
 let themePreference = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : null;
-let activeFilter = 'all';
+const storedFilter = localStorage.getItem(FILTER_STORAGE_KEY);
+let activeFilter = ['all', 'active', 'completed'].includes(storedFilter) ? storedFilter : 'all';
 
 function applyTheme() {
   const isDark = themePreference
@@ -123,15 +125,20 @@ function render() {
   remainingCount.textContent = `未完成:${todos.filter((todo) => !todo.completed).length} 項`;
 }
 
+function updateFilterButtons() {
+  filterButtons.forEach((button) => {
+    const isActive = button.dataset.filter === activeFilter;
+    button.classList.toggle('is-active', isActive);
+    button.setAttribute('aria-pressed', String(isActive));
+  });
+}
+
 // 切換篩選時只改變顯示內容，不會修改待辦資料。
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
     activeFilter = button.dataset.filter;
-    filterButtons.forEach((filterButton) => {
-      const isActive = filterButton === button;
-      filterButton.classList.toggle('is-active', isActive);
-      filterButton.setAttribute('aria-pressed', String(isActive));
-    });
+    localStorage.setItem(FILTER_STORAGE_KEY, activeFilter);
+    updateFilterButtons();
     render();
   });
 });
@@ -183,4 +190,5 @@ list.addEventListener('click', (event) => {
 });
 
 applyTheme();
+updateFilterButtons();
 render();

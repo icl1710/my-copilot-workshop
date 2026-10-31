@@ -9,10 +9,44 @@
   --color-text: #1f2328;
   --color-muted: #656d76;
   --color-border: #d0d7de;
+  --color-control: #ffffff;
   --color-accent: #1f883d;
   --color-accent-hover: #1a7f37;
+  --color-accent-contrast: #ffffff;
   --color-danger: #cf222e;
   --shadow-card: 0 8px 24px rgba(31, 35, 40, 0.08);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #171b22;
+  --color-surface: #222832;
+  --color-text: #e6edf3;
+  --color-muted: #a1aab5;
+  --color-border: #3a424e;
+  --color-control: #222832;
+  --color-accent: #3fb950;
+  --color-accent-hover: #56d364;
+  --color-accent-contrast: #142019;
+  --color-danger: #ff7b72;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --color-background: #171b22;
+    --color-surface: #222832;
+    --color-text: #e6edf3;
+    --color-muted: #a1aab5;
+    --color-border: #3a424e;
+    --color-control: #222832;
+    --color-accent: #3fb950;
+    --color-accent-hover: #56d364;
+    --color-accent-contrast: #142019;
+    --color-danger: #ff7b72;
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
+  }
 }
 
 body {
@@ -38,15 +72,68 @@ body {
 }
 
 h1 {
-  margin: 0 0 24px;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
   font-size: 1.6rem;
-  text-align: center;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.btn-theme {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  color: var(--color-text);
+  background: var(--color-control);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btn-theme:hover {
+  background: var(--color-background);
 }
 
 .todo-form {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin: -4px 0 16px;
+}
+
+.btn-filter {
+  flex: 1;
+  padding: 8px 12px;
+  color: var(--color-muted);
+  background: var(--color-control);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-filter:hover {
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+.btn-filter.is-active {
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  font-weight: 600;
 }
 
 .todo-input {
@@ -62,6 +149,8 @@ h1 {
 
 .todo-input:focus-visible,
 .btn-add:focus-visible,
+.btn-theme:focus-visible,
+.btn-filter:focus-visible,
 .btn-delete:focus-visible,
 .todo-item input:focus-visible {
   outline: 2px solid var(--color-accent);
@@ -70,7 +159,7 @@ h1 {
 
 .btn-add {
   padding: 11px 18px;
-  color: var(--color-surface);
+  color: var(--color-accent-contrast);
   background: var(--color-accent);
   border: 0;
   border-radius: 9px;
@@ -174,5 +263,18 @@ h1 {
 
   .app {
     padding: 20px 16px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .app-header {
+    gap: 8px;
+  }
+
+  .btn-theme {
+    padding: 8px;
+    font-size: 0.8rem;
   }
 }

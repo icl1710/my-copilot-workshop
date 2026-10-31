@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f4f5f7">
   <title>我的待辦清單</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="app">
-    <h1>📝 我的待辦清單</h1>
+    <header class="app-header">
+      <h1>📝 我的待辦清單</h1>
+      <button id="theme-toggle" class="btn-theme" type="button" aria-pressed="false"></button>
+    </header>
 
     <!-- 新增待辦事項的表單 -->
     <form id="todo-form" class="todo-form" autocomplete="off">
@@ -24,6 +26,13 @@
       >
       <button type="submit" class="btn-add">新增</button>
     </form>
+
+    <!-- 切換待辦事項的顯示範圍 -->
+    <nav class="filter-bar" aria-label="待辦事項篩選">
+      <button class="btn-filter is-active" type="button" data-filter="all" aria-pressed="true">全部</button>
+      <button class="btn-filter" type="button" data-filter="active" aria-pressed="false">未完成</button>
+      <button class="btn-filter" type="button" data-filter="completed" aria-pressed="false">已完成</button>
+    </nav>
 
     <!-- 待辦清單由 JavaScript 動態產生 -->
     <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
